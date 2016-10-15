@@ -27,30 +27,32 @@ public class InputChecker : MonoBehaviour {
   }
 
   private void UpdateActionInputs() {
-    if (Input.GetAxis("PS4AX") >= 1.0f) {
-      ActRight.GetComponent<Renderer>().material.color = Color.red;
-      ActLeft.GetComponent<Renderer>().material.color = Color.white;
-    }
-    else if (Input.GetAxis("PS4AX") <= -1.0f) {
-      ActRight.GetComponent<Renderer>().material.color = Color.white;
+    if (Input.GetAxis("PS4Square") == 1.0f) {
       ActLeft.GetComponent<Renderer>().material.color = Color.red;
     }
     else {
-      ActRight.GetComponent<Renderer>().material.color = Color.white;
       ActLeft.GetComponent<Renderer>().material.color = Color.white;
     }
 
-    if (Input.GetAxis("PS4AY") >= 1.0f) {
-      ActUp.GetComponent<Renderer>().material.color = Color.red;
-      ActDown.GetComponent<Renderer>().material.color = Color.white;
-    }
-    else if (Input.GetAxis("PS4AY") <= -1.0f) {
-      ActUp.GetComponent<Renderer>().material.color = Color.white;
+    if (Input.GetAxis("PS4Cross") == 1.0f) {
       ActDown.GetComponent<Renderer>().material.color = Color.red;
     }
     else {
-      ActUp.GetComponent<Renderer>().material.color = Color.white;
       ActDown.GetComponent<Renderer>().material.color = Color.white;
+    }
+
+    if (Input.GetAxis("PS4Circle") == 1.0f) {
+      ActRight.GetComponent<Renderer>().material.color = Color.red;
+    }
+    else {
+      ActRight.GetComponent<Renderer>().material.color = Color.white;
+    }
+
+    if (Input.GetAxis("PS4Triangle") == 1.0f) {
+      ActUp.GetComponent<Renderer>().material.color = Color.red;
+    }
+    else {
+      ActUp.GetComponent<Renderer>().material.color = Color.white;
     }
   }
 
