@@ -21,7 +21,7 @@ public class InputChecker : MonoBehaviour {
   [SerializeField]
   private GameObject ActRight = null;
 
-  void Update() {
+  private void Update() {
     UpdateActionInputs();
     UpdateDirectionInputs();
   }
@@ -57,6 +57,7 @@ public class InputChecker : MonoBehaviour {
   }
 
   private void UpdateDirectionInputs() {
+
     if (Input.GetAxis("PS4LX") >= 1.0f || Input.GetAxis("PS4DX") >= 1.0f) {
       DirRight.GetComponent<Renderer>().material.color = Color.red;
       DirLeft.GetComponent<Renderer>().material.color = Color.white;
