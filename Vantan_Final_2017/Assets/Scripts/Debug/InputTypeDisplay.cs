@@ -10,7 +10,7 @@ public class InputTypeDisplay : MonoBehaviour {
   [SerializeField]
   private Text inputLog = null;
 
-  private GamepadInputHandler gamePadInput;
+  private DebugGamepadInputHandler gamePadInput;
 
   string currentInput;
   string previousInput;
@@ -19,7 +19,7 @@ public class InputTypeDisplay : MonoBehaviour {
   private void Start() {
     inputDisplay.text = "";
     inputLog.text = "";
-    gamePadInput = GetComponent<GamepadInputHandler>();
+    gamePadInput = GetComponent<DebugGamepadInputHandler>();
     inputLogList = new List<string>();
   }
 

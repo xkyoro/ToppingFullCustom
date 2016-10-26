@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 
-public struct GamepadInput {
-  private DirectionalInputs _dirInput;
+public struct DebugGamepadInput {
+  private DebugDirectionalInputs _dirInput;
 
-  public DirectionalInputs dirInput {
+  public DebugDirectionalInputs dirInput {
     get { return _dirInput; }
     set { _dirInput = value; }
   }
 
-  private List<ActionInputs> _actInputs;
+  private List<DebugActionInputs> _actInputs;
 
-  public List<ActionInputs> actInputs {
+  public List<DebugActionInputs> actInputs {
     get { return _actInputs; }
     set { _actInputs = value; }
   }
 }
 
-public enum DirectionalInputs {
+public enum DebugDirectionalInputs {
   Neutral,
   Up,
   UpLeft,
@@ -28,7 +28,7 @@ public enum DirectionalInputs {
   UpRight
 }
 
-public enum ActionInputs {
+public enum DebugActionInputs {
   ActUp,
   ActLeft,
   ActDown,

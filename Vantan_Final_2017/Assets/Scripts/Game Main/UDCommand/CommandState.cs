@@ -1,5 +1,6 @@
-﻿
-public enum CommandState {
-  Neutral,
-  Highlighted
+﻿namespace UDCommand {
+  public enum CommandState {
+    Neutral,
+    Highlighted
+  }
 }

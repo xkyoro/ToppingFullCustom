@@ -1,27 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UDC = UDCommand;
 
-public class RescaleByState : MonoBehaviour {
+namespace UDCommand {
+  public class RescaleByState : MonoBehaviour {
 
-  [SerializeField]
-  private Vector2 neutralScale = new Vector2(50,50);
+    [SerializeField]
+    private Vector2 neutralScale = new Vector2(50, 50);
 
-  [SerializeField]
-  private Vector2 highlightedScale = new Vector2(75,75);
+    [SerializeField]
+    private Vector2 highlightedScale = new Vector2(75, 75);
 
-  private CommandState _currentState;
+    private UDC.CommandState _currentState;
 
-  public CommandState currentState {
-    get { return _currentState; }
-    set { _currentState = value; }
+    public UDC.CommandState currentState {
+      get { return _currentState; }
+      set { _currentState = value; }
+    }
+
+    void Update() {
+      if (currentState == UDC.CommandState.Neutral) {
+        GetComponent<RectTransform>().sizeDelta = neutralScale;
+      }
+      else {
+        GetComponent<RectTransform>().sizeDelta = highlightedScale;
+      }
+    }
   }
-
-  void Update () {
-	  if(currentState == CommandState.Neutral) {
-      GetComponent<RectTransform>().sizeDelta = neutralScale;
-    }
-    else {
-      GetComponent<RectTransform>().sizeDelta = highlightedScale;
-    }
-	}
 }

@@ -1,89 +1,72 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using TFC = ToppingFullCustom;
 
-public class GamepadInputHandler : MonoBehaviour {
+namespace ToppingFullCustom {
+  public class GamepadInputHandler : MonoBehaviour {
+    public static List<InputType> GetInputs() {
+      List<InputType> inputs = new List<InputType>();
+      GetDirectionalInputs(inputs);
+      GetActionInputs(inputs);
 
-  GamepadInput gamePadInput;
-
-  private void Start() {
-    gamePadInput.actInputs = new List<ActionInputs>();
-    gamePadInput.dirInput = DirectionalInputs.Neutral;
-  }
-
-  private void GetActionInputs() {
-    gamePadInput.actInputs.Clear();
-    if (Input.GetAxis("PS4Square") == 1.0f) {
-      gamePadInput.actInputs.Add(ActionInputs.ActLeft);
-    }
-    if (Input.GetAxis("PS4Cross") == 1.0f) {
-      gamePadInput.actInputs.Add(ActionInputs.ActDown);
-    }
-    if (Input.GetAxis("PS4Circle") == 1.0f) {
-      gamePadInput.actInputs.Add(ActionInputs.ActRight);
-    }
-    if (Input.GetAxis("PS4Triangle") == 1.0f) {
-      gamePadInput.actInputs.Add(ActionInputs.ActUp);
-    }
-  }
-
-  private void GetDirectionInputs() {
-    DirectionalInputs horizontalInput = DirectionalInputs.Neutral;
-    DirectionalInputs verticalInput = DirectionalInputs.Neutral;
-
-    if (Input.GetAxis("PS4LX") >= 1.0f || Input.GetAxis("PS4DX") >= 1.0f) {
-      horizontalInput = DirectionalInputs.Right;
-    }
-    else if (Input.GetAxis("PS4LX") <= -1.0f || Input.GetAxis("PS4DX") <= -1.0f) {
-      horizontalInput = DirectionalInputs.Left;
-    }
-    else {
-      horizontalInput = DirectionalInputs.Neutral;
+      return inputs;
     }
 
-    if (Input.GetAxis("PS4LY") >= 1.0f || Input.GetAxis("PS4DY") >= 1.0f) {
-      verticalInput = DirectionalInputs.Up;
-    }
-    else if (Input.GetAxis("PS4LY") <= -1.0f || Input.GetAxis("PS4DY") <= -1.0f) {
-      verticalInput = DirectionalInputs.Down;
-    }
-    else {
-      verticalInput = DirectionalInputs.Neutral;
-    }
+    private static void GetActionInputs(List<InputType> inputs) {
+      ActionInputs actInput = ActionInputs.Neutral;
 
-    MixDirectionalInputs(horizontalInput, verticalInput);
-  }
-
-  private void MixDirectionalInputs(DirectionalInputs horizontalInput, DirectionalInputs verticalInput) {
-    if (horizontalInput == DirectionalInputs.Neutral) {
-      gamePadInput.dirInput = verticalInput;
-    }
-    else if (horizontalInput == DirectionalInputs.Left) {
-      if (verticalInput == DirectionalInputs.Neutral) {
-        gamePadInput.dirInput = horizontalInput;
+      if (Input.GetAxis("PS4Square") >= 0.5f) {
+        actInput = ActionInputs.Square;
+        inputs.Add(TFC.Utility.ActionToInputType(actInput));
       }
-      else if (verticalInput == DirectionalInputs.Up) {
-        gamePadInput.dirInput = DirectionalInputs.UpLeft;
+
+      if (Input.GetAxis("PS4Cross") >= 0.5f) {
+        actInput = ActionInputs.Cross;
+        inputs.Add(TFC.Utility.ActionToInputType(actInput));
+      }
+
+      if (Input.GetAxis("PS4Circle") >= 0.5f) {
+        actInput = ActionInputs.Circle;
+        inputs.Add(TFC.Utility.ActionToInputType(actInput));
+      }
+
+      if (Input.GetAxis("PS4Triangle") >= 0.5f) {
+        actInput = ActionInputs.Triangle;
+        inputs.Add(TFC.Utility.ActionToInputType(actInput));
+      }
+    }
+
+    private static void GetDirectionalInputs(List<InputType> inputs) {
+      DirectionalInputs horInput;
+      DirectionalInputs vertInput;
+
+      if ((Input.GetAxis("PS4LX") >= 0.5f) || (Input.GetAxis("PS4DX") >= 0.5f)) {
+        horInput = DirectionalInputs.Right;
+      }
+      else if ((Input.GetAxis("PS4LX") <= -0.5f) || (Input.GetAxis("PS4DX") <= -0.5f)) {
+        horInput = DirectionalInputs.Left;
       }
       else {
-        gamePadInput.dirInput = DirectionalInputs.DownLeft;
+        horInput = DirectionalInputs.Neutral;
       }
-    }
-    else {
-      if (verticalInput == DirectionalInputs.Neutral) {
-        gamePadInput.dirInput = horizontalInput;
+
+      if ((Input.GetAxis("PS4LY") >= 0.5f) || (Input.GetAxis("PS4DY") >= 0.5f)) {
+        vertInput = DirectionalInputs.Up;
       }
-      else if (verticalInput == DirectionalInputs.Up) {
-        gamePadInput.dirInput = DirectionalInputs.UpRight;
+      else if ((Input.GetAxis("PS4LY") <= -0.5f) || (Input.GetAxis("PS4DY") <= -0.5f)) {
+        vertInput = DirectionalInputs.Down;
       }
       else {
-        gamePadInput.dirInput = DirectionalInputs.DownRight;
+        vertInput = DirectionalInputs.Neutral;
+      }
+
+      if (horInput != DirectionalInputs.Neutral) {
+        inputs.Add(TFC.Utility.DirectionalToInputType(horInput));
+      }
+
+      if (vertInput != DirectionalInputs.Neutral) {
+        inputs.Add(TFC.Utility.DirectionalToInputType(vertInput));
       }
     }
-  }
-
-  public GamepadInput GetInputs() {
-    GetActionInputs();
-    GetDirectionInputs();
-    return gamePadInput;
   }
 }
